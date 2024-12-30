@@ -19,10 +19,12 @@ defmodule Cmd.Strategies do
     |> Enum.map(fn prompt ->
       with {:ok, title} <- Store.Prompt.read_title(prompt),
            {:ok, prompt_text} <- Store.Prompt.read_prompt(prompt),
-           {:ok, questions} <- Store.Prompt.read_questions(prompt) do
+           {:ok, questions} <- Store.Prompt.read_questions(prompt),
+           {:ok, version} <- Store.Prompt.version(prompt) do
         """
         # #{title}
         **ID:** #{prompt.id}
+        **Version:** v#{version}
 
         **Questions:**
         #{questions}

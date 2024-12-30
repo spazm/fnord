@@ -250,8 +250,7 @@ defmodule Store.Prompt do
 
     list_prompts()
     |> Enum.reduce([], fn prompt, acc ->
-      with {:ok, version} = get_current_version_number(prompt),
-           {:ok, embeddings} <- read_embeddings(prompt, version) do
+      with {:ok, embeddings} <- read_embeddings(prompt) do
         score = AI.Util.cosine_similarity(needle, embeddings)
         [{score, prompt} | acc]
       else
